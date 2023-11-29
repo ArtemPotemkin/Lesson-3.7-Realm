@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class TaskListViewController: UITableViewController {
     
-    var taskLists: [TaskList] = []
+    var taskLists: Results<TaskList>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,13 @@ final class TaskListViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = addButton
         navigationItem.leftBarButtonItem = editButtonItem
+        createTempData()
+        taskLists = StorageManager.shared.realm.objects(TaskList.self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -47,12 +55,17 @@ final class TaskListViewController: UITableViewController {
             StorageManager.shared.delete(taskList)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        // TODO: edit editAction
-        let editActioin = UIContextualAction(style: .normal, title: "Edit") { _, _, isDone in
+        
+        let editActioin = UIContextualAction(style: .normal, title: "Edit") { [unowned self] _, _, isDone in
+            showAlert(with: taskList) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
             isDone(true)
         }
-        // TODO: edit doneAction
+        
         let doneAction = UIContextualAction(style: .normal, title: "Done") { _, _, isDone in
+            StorageManager.shared.done(taskList)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
             isDone(true)
         }
         
@@ -72,10 +85,43 @@ final class TaskListViewController: UITableViewController {
    
     // TODO: Finish this
     @objc private func addButtonPressed() {
-        
+        showAlert()
     }
 
     @IBAction func sortingList(_ sender: UISegmentedControl) {
     }
     
+    private func createTempData() {
+        if !UserDefaults.standard.bool(forKey: "done") {
+            DataManager.shared.createTempData { [unowned self] in
+                UserDefaults.standard.set(true, forKey: "done")
+                tableView.reloadData()
+            }
+        }
+    }
+}
+
+extension TaskListViewController {
+    
+    private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
+        let title = taskList != nil ? "Edit List" : "New List"
+        let alert = UIAlertController.createAlert(withTitle: title, andMessage: "Please set the title for a new task List")
+        
+        alert.action(with: taskList) { [weak self] newValue in
+            if let taskList = taskList, let completion = completion {
+                StorageManager.shared.edit(taskList, newValue: newValue)
+                completion()
+            } else {
+                self?.save(taskList: newValue)
+            }
+        }
+        present(alert, animated: true)
+    }
+    
+    private func save(taskList: String){
+        StorageManager.shared.save(taskList) { taskList in
+            let rowIndex = IndexPath(row: taskLists.index(of: taskList) ?? 0, section: 0)
+            tableView.insertRows(at: [rowIndex], with: .automatic)
+        }
+    }
 }
