@@ -2,7 +2,7 @@
 //  TaskListViewController.swift
 //  Lesson 3.7 Realm
 //
-//  Created byyy Артём Потёмкин on 27.11.2023.
+//  Created by Артём Потёмкин on 27.11.2023.
 //
 
 import UIKit
