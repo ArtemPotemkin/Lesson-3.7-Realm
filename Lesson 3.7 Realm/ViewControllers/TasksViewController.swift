@@ -65,7 +65,15 @@ final class TasksViewController: UITableViewController {
             StorageManager.shared.delete(task)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { [unowned self] _, _, isDone in
+            showAlert(with: task) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            isDone(true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
 }
 
@@ -76,8 +84,10 @@ extension TasksViewController {
         let alert = UIAlertController.createAlert(withTitle: title, andMessage: "What do you want to do?")
         
         alert.action(with: task) { [weak self] taskTitle, note in
-            if let _ = task, let _ = completion {
+            if let task = task, let completion = completion {
                 // TODO: edit task
+                StorageManager.shared.edit(task, newValue: taskTitle, newNote: note)
+                completion()
             } else {
                 self?.save(task: taskTitle, withNote: note)
             }
