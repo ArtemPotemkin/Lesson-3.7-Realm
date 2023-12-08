@@ -40,7 +40,6 @@ class StorageManager {
         write {
             taskList.name = newValue
         }
-        
     }
     
     func done(_ taskList: TaskList) {
