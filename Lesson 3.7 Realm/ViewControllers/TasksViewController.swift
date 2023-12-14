@@ -73,19 +73,28 @@ final class TasksViewController: UITableViewController {
             isDone(true)
         }
         
-        let doneAction = UIContextualAction(style: .normal, title: "Done") { [weak self] _, _, isDone in
+        let doneTitle = indexPath.section == 0 ? "Done" : "Undone"
+        
+        let doneAction = UIContextualAction(style: .normal, title: doneTitle) { [weak self] _, _, isDone in
             StorageManager.shared.done(task)
-            let destinationTaskIndex = IndexPath(row: self?.completedTasks.index(of: task) ?? 0, section: 1)
-            tableView.moveRow(at: indexPath, to: destinationTaskIndex)
+            let currentTaskIndex = IndexPath(
+                row: self?.currentTasks.index(of: task) ?? 0,
+                section: 0
+            )
+            let completedTaskIndex = IndexPath(
+                row: self?.completedTasks.index(of: task) ?? 0,
+                section: 1
+            )
+            let destinationIndexPath = indexPath.section == 0 ? completedTaskIndex : currentTaskIndex
+            tableView.moveRow(at: indexPath, to: destinationIndexPath)
+            
             isDone(true)
         }
         
         editAction.backgroundColor = .orange
         doneAction.backgroundColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         
-        return UISwipeActionsConfiguration(actions: indexPath.section == 0 ?
-                                           [doneAction, editAction, deleteAction] : [editAction, deleteAction]
-        )
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction])
     }
 }
 
