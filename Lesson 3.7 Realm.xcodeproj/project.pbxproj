@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D01253CF2B2B9E8500A1C6F5 /* Extension + UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01253CE2B2B9E8500A1C6F5 /* Extension + UITableViewCell.swift */; };
 		D01701972B14B4E400077F2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01701962B14B4E400077F2D /* AppDelegate.swift */; };
 		D01701992B14B4E400077F2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01701982B14B4E400077F2D /* SceneDelegate.swift */; };
 		D017019E2B14B4E400077F2D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D017019C2B14B4E400077F2D /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D01253CE2B2B9E8500A1C6F5 /* Extension + UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UITableViewCell.swift"; sourceTree = "<group>"; };
 		D01701932B14B4E400077F2D /* Lesson 3.7 Realm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lesson 3.7 Realm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D01701962B14B4E400077F2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D01701982B14B4E400077F2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D01253CD2B2B9E3F00A1C6F5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D01253CE2B2B9E8500A1C6F5 /* Extension + UITableViewCell.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		D017018A2B14B4E400077F2D = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +80,7 @@
 		D01701952B14B4E400077F2D /* Lesson 3.7 Realm */ = {
 			isa = PBXGroup;
 			children = (
+				D01253CD2B2B9E3F00A1C6F5 /* Extensions */,
 				D01701BB2B14C08800077F2D /* Resources */,
 				D01701BA2B14C06B00077F2D /* StoryBoards */,
 				D01701B52B14C04800077F2D /* Services */,
@@ -218,6 +229,7 @@
 				D01701B72B14C05200077F2D /* DataManager.swift in Sources */,
 				D01701972B14B4E400077F2D /* AppDelegate.swift in Sources */,
 				D01701AF2B14BFDA00077F2D /* AlertController.swift in Sources */,
+				D01253CF2B2B9E8500A1C6F5 /* Extension + UITableViewCell.swift in Sources */,
 				D01701992B14B4E400077F2D /* SceneDelegate.swift in Sources */,
 				D01701B92B14C05E00077F2D /* StorageManager.swift in Sources */,
 			);
